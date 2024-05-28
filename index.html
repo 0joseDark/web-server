@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecomando</title>
+    <style>
+        .button {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            font-size: 24px;
+        }
+        .arrow-button {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            display: inline-block;
+        }
+        .up {
+            border-width: 0 50px 100px 50px;
+            border-color: transparent transparent #000000 transparent;
+        }
+        .down {
+            border-width: 100px 50px 0 50px;
+            border-color: #000000 transparent transparent transparent;
+        }
+        .left {
+            border-width: 50px 100px 50px 0;
+            border-color: transparent #000000 transparent transparent;
+        }
+        .right {
+            border-width: 50px 0 50px 100px;
+            border-color: transparent transparent transparent #000000;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div>
+            <button class="arrow-button up" onclick="sendCommand('frente')"></button>
+        </div>
+        <div>
+            <button class="arrow-button left" onclick="sendCommand('esquerda')"></button>
+            <button class="arrow-button right" onclick="sendCommand('direita')"></button>
+        </div>
+        <div>
+            <button class="arrow-button down" onclick="sendCommand('atraz')"></button>
+        </div>
+        <div>
+            <button class="button" onclick="sendCommand('cima')">Cima</button>
+            <button class="button" onclick="sendCommand('baixo')">Baixo</button>
+            <button class="button" onclick="sendCommand('saltar')">Saltar</button>
+        </div>
+    </div>
+    <script>
+        function sendCommand(action) {
+            fetch('/command', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: action })
+            }).then(response => response.json())
+              .then(data => console.log(data));
+        }
+    </script>
+</body>
+</html>
