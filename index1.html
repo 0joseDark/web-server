@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servidor Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 9px #999;
+        }
+        .button:hover {background-color: #3e8e41}
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Servidor Web</h1>
+    <form method="post" action="/control">
+        <label for="directory">Pasta a servir:</label>
+        <input type="text" id="directory" name="directory" value="{{ current_directory }}">
+        <button type="submit" name="action" value="serve" class="button">Servir Pasta</button>
+    </form>
+    <br>
+    <div class="container">
+        <button class="button" onclick="sendCommand(5)">↑</button>
+    </div>
+    <div class="container">
+        <button class="button" onclick="sendCommand(4)">←</button>
+        <button class="button" onclick="sendCommand(1)">↓</button>
+        <button class="button" onclick="sendCommand(3)">→</button>
+    </div>
+    <div class="container">
+        <button class="button" onclick="sendCommand(6)">⇩</button>
+        <button class="button" onclick="sendCommand(7)">⬈</button>
+    </div>
+    <script>
+        function sendCommand(command) {
+            fetch('/execute/' + command, { method: 'POST' })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                alert(data);
+            });
+        }
+    </script>
+</body>
+</html>
