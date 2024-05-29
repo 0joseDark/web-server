@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # pip install flask
 
 from flask import Flask, request, send_from_directory, render_template_string
